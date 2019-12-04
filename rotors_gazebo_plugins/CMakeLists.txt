@@ -301,6 +301,14 @@ if (NOT NO_ROS)
 endif()
 list(APPEND targets_to_install rotors_gazebo_fw_dynamics_plugin)
 
+#===================================== KAMIKAZE DYNAMICS PLUGIN =======================================//
+add_library(rotors_gazebo_kamikaze_dynamics_plugin SHARED src/gazebo_kamikaze_dynamics_plugin.cpp)
+target_link_libraries(rotors_gazebo_kamikaze_dynamics_plugin ${target_linking_LIBRARIES}  ${YamlCpp_LIBRARIES})
+if (NOT NO_ROS)
+  add_dependencies(rotors_gazebo_kamikaze_dynamics_plugin ${catkin_EXPORTED_TARGETS})
+endif()
+list(APPEND targets_to_install rotors_gazebo_kamikaze_dynamics_plugin)
+
 #========================================= GPS PLUGIN ===========================================//
 add_library(rotors_gazebo_gps_plugin SHARED src/gazebo_gps_plugin.cpp)
 target_link_libraries(rotors_gazebo_gps_plugin ${target_linking_LIBRARIES} )

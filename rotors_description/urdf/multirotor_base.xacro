@@ -38,7 +38,7 @@
 
   <!-- Main multirotor link -->
   <xacro:macro name="multirotor_base_macro"
-    params="robot_namespace mass body_width body_height use_mesh_file mesh_file *inertia">
+    params="robot_namespace mass body_width body_height use_body_length body_length use_mesh_file mesh_file *inertia">
     <link name="${robot_namespace}/base_link"></link>
 
     <joint name="${robot_namespace}/base_joint" type="fixed">
@@ -61,7 +61,12 @@
             <mesh filename="${mesh_file}" scale="1 1 1" />
           </xacro:if>
           <xacro:unless value="${use_mesh_file}">
-            <box size="${body_width} ${body_width} ${body_height}"/> <!-- [m] [m] [m] -->
+            <xacro:if value="${use_body_length}">
+              <box size="${body_length} ${body_width} ${body_height}"/> <!-- [m] [m] [m] -->
+            </xacro:if>
+            <xacro:unless value="${use_body_length}">
+              <box size="${body_width} ${body_width} ${body_height}"/> <!-- [m] [m] [m] -->
+            </xacro:unless>
           </xacro:unless>
         </geometry>
       </visual>
@@ -69,7 +74,12 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <box size="${body_width} ${body_width} ${body_height}" /> <!-- [m] [m] [m] -->
+          <xacro:if value="${use_body_length}">
+            <box size="${body_length} ${body_width} ${body_height}"/> <!-- [m] [m] [m] -->
+          </xacro:if>
+          <xacro:unless value="${use_body_length}">
+            <box size="${body_width} ${body_width} ${body_height}"/> <!-- [m] [m] [m] -->
+          </xacro:unless>
         </geometry>
       </collision>
     </link>

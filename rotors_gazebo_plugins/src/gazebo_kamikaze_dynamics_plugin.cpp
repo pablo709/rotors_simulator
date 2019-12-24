@@ -1,17 +1,4 @@
 /*
- * Copyright 2017 Pavel Vechersky, ASL, ETH Zurich, Switzerland
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
-
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 // MODULE HEADER
@@ -45,7 +32,8 @@ void GazeboKamikazeDynamicsPlugin::Load(physics::ModelPtr _model,
 
   gzdbg << "_model = " << _model->GetName() << std::endl;
 
-  // Store the pointer to the model.
+  // Store the pointer to the model. 
+  // NICO:la informaicon que tiene este objeto esta en la api
   model_ = _model;
   world_ = model_->GetWorld();
 
@@ -57,13 +45,13 @@ void GazeboKamikazeDynamicsPlugin::Load(physics::ModelPtr _model,
   else
     gzerr << "[gazebo_kamikaze_dynamics_plugin] Please specify a robotNamespace.\n";
 
-  // Create the node handle.
+  // Create the node handle. Crea un nodo para comunicarse
   node_handle_ = transport::NodePtr(new transport::Node());
 
   // Initialise with default namespace (typically /gazebo/default/).
   node_handle_->Init();
 
-  // Get the link name.
+  // Get the link name. esto lo usa para leer los parametros del sistema
   std::string link_name;
   if (_sdf->HasElement("linkName"))
     link_name = _sdf->GetElement("linkName")->Get<std::string>();

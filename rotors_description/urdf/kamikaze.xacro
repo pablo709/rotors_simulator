@@ -35,9 +35,9 @@
     <xacro:box_inertia x="${radius_rotor}" y="0.015" z="0.003" mass="${mass_rotor*rotor_velocity_slowdown_sim}" />
   </xacro:property>
 
-  <!-- Included URDF Files -->
+  <!-- Included URDF Motors Files -->
   <xacro:include filename="$(find rotors_description)/urdf/multirotor_base.xacro" />
-
+  
   <!-- Instantiate multirotor_base_macro once -->
   <xacro:multirotor_base_macro
     robot_namespace="${namespace}"
@@ -96,5 +96,85 @@
     <origin xyz="0.228 0 0.059" rpy="0 0 0" />
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
+
+
+  <!-- modelo servo -->
+
+  <joint name="${namespace}/elevon_0_revolutejoint" type="continuous">
+    <axis xyz="1 0 0" />
+    <origin xyz="2 0 0.059" rpy="0 0 0" />
+    <parent link="${namespace}/base_link" />
+    <child link="${namespace}/tilt_unit_0" />
+  </joint>
+
+  <link name="${namespace}/tilt_unit_0">
+    <inertial>
+      <mass value="0.1" />
+      <xacro:insert_block name="body_inertia" />
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.5 0.2 0.5"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.005 0.005 0.005" />
+        <!-- [m] -->
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo>
+    <plugin name="right_tilt_unit_model" filename="librotors_gazebo_motor_model.so">
+      <robotNamespace>kamikaze</robotNamespace>
+      <jointName>kamikaze/tilt_unit_0_revolutejoint</jointName>
+      <linkName>kamikaze/tilt_unit_0</linkName>
+      <turningDirection>ccw</turningDirection>
+      <motorType>position</motorType>
+      <commandSubTopic>tilt_angle</commandSubTopic>
+      <motorNumber>2</motorNumber>
+      <motorSpeedPubTopic>tilt_motor_0/velocity</motorSpeedPubTopic>
+      <motorPositionPubTopic>tilt_motor_0/position</motorPositionPubTopic>
+      <joint_control_pid>
+        <p>1.0</p>
+        <i>0.0</i>
+        <d>0.01</d>
+        <iMax>1.0</iMax>
+        <iMin>-1.0</iMin>
+        <cmdMax>2.0</cmdMax>
+        <cmdMin>-2.0</cmdMin>
+      </joint_control_pid>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="${namespace}/tilt_unit_0">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+  <!-- Elevon -->
+  <!-- <joint name="rotor_${motor_number}_joint" type="continuous">
+    <origin xyz="0 0 ${rotor_offset_top}" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <parent link="${namespace}/tilt_unit_${motor_number}" />
+    <child link="rotor_${motor_number}" />
+  </joint>
+
+  <link name="rotor_${motor_number}">
+    <inertial>
+      <mass value="${mass_rotor}" />
+      <xacro:insert_block name="inertia" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://rotors_description/meshes/${mesh}_${direction}.dae" scale="${radius_rotor} ${radius_rotor} ${radius_rotor}" />
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.005" radius="${radius_rotor}" />
+      </geometry>
+    </collision>
+  </link> -->
 
 </robot>

@@ -79,10 +79,10 @@
       <xacro:insert_block name="origin" />
       <axis xyz="1 0 0" />
       <parent link="${parent}" />
-      <child link="${namespace}/tilt_unit_${motor_number}" />
+      <child link="${robot_namespace}/tilt_unit_${motor_number}" />
     </joint>
 
-    <link name="${namespace}/tilt_unit_${motor_number}">
+    <link name="${robot_namespace}/tilt_unit_${motor_number}">
       <inertial>
         <mass value="${mass_tilt_unit}" /> <!-- [kg] -->
         <xacro:insert_block name="tilt_unit_inertia" />
@@ -103,8 +103,8 @@
     <gazebo>
       <plugin name="${suffix}_tilt_unit_model" filename="librotors_gazebo_motor_model.so">
         <robotNamespace>${robot_namespace}</robotNamespace>
-        <jointName>${namespace}/tilt_unit_${motor_number}_revolutejoint</jointName>
-        <linkName>${namespace}/tilt_unit_${motor_number}</linkName>
+        <jointName>${robot_namespace}/tilt_unit_${motor_number}_revolutejoint</jointName>
+        <linkName>${robot_namespace}/tilt_unit_${motor_number}</linkName>
         <turningDirection>ccw</turningDirection>
         <motorType>position</motorType>
         <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
@@ -123,7 +123,7 @@
       </plugin>
     </gazebo>
 
-    <gazebo reference="${namespace}/tilt_unit_${motor_number}">
+    <gazebo reference="${robot_namespace}/tilt_unit_${motor_number}">
       <material>Gazebo/White</material>
     </gazebo>
 
@@ -131,7 +131,7 @@
     <joint name="rotor_${motor_number}_joint" type="continuous">
       <origin xyz="0 0 ${rotor_offset_top}" rpy="0 0 0" />
       <axis xyz="0 0 1" />
-      <parent link="${namespace}/tilt_unit_${motor_number}" />
+      <parent link="${robot_namespace}/tilt_unit_${motor_number}" />
       <child link="rotor_${motor_number}" />
     </joint>
 
@@ -186,10 +186,10 @@
       <xacro:insert_block name="origin" />
       <axis xyz="1 0 0" />
       <parent link="${parent}" />
-      <child link="${namespace}/tilt_unit_${motor_number}" />
+      <child link="${robot_namespace}/tilt_unit_${motor_number}" />
     </joint>
 
-    <link name="${namespace}/tilt_unit_${motor_number}">
+    <link name="${robot_namespace}/tilt_unit_${motor_number}">
       <inertial>
         <mass value="${mass_tilt_unit}" /> <!-- [kg] -->
         <xacro:insert_block name="tilt_unit_inertia" />
@@ -230,15 +230,15 @@
       </plugin>
     </gazebo>
 
-    <gazebo reference="${namespace}/tilt_unit_${motor_number}">
-      <material>Gazebo/White</material>
+    <gazebo reference="${robot_namespace}/tilt_unit_${motor_number}">
+      <material>Gazebo/${color}</material>
     </gazebo>
 
     <!-- Upper Rotor -->
     <joint name="rotor_${motor_number}_joint" type="continuous">
       <origin xyz="0 0 ${rotor_offset_top}" rpy="0 0 0" />
       <axis xyz="0 0 1" />
-      <parent link="${namespace}/tilt_unit_${motor_number}" />
+      <parent link="${robot_namespace}/tilt_unit_${motor_number}" />
       <child link="rotor_${motor_number}" />
     </joint>
 
@@ -287,7 +287,7 @@
     <joint name="rotor_${motor_number+6}_joint" type="continuous">
       <origin xyz="0 0 ${-rotor_offset_top}" rpy="0 0 0" />
       <axis xyz="0 0 1" />
-      <parent link="${namespace}/tilt_unit_${motor_number}" />
+      <parent link="${robot_namespace}/tilt_unit_${motor_number}" />
       <child link="rotor_${motor_number+6}" />
     </joint>
 

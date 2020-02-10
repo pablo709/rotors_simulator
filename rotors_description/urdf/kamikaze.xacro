@@ -100,14 +100,14 @@
 
   <!-- modelo servo -->
 
-  <joint name="${namespace}/elevon_0_revolutejoint" type="continuous">
+  <joint name="${namespace}/elevon_2_revolutejoint" type="continuous">
     <axis xyz="1 0 0" />
     <origin xyz="2 0 0.059" rpy="0 0 0" />
     <parent link="${namespace}/base_link" />
-    <child link="${namespace}/tilt_unit_0" />
+    <child link="${namespace}/elevon_unit_2" />
   </joint>
 
-  <link name="${namespace}/tilt_unit_0">
+  <link name="${namespace}/elevon_unit_2">
     <inertial>
       <mass value="0.1" />
       <xacro:insert_block name="body_inertia" />
@@ -126,16 +126,16 @@
   </link>
 
   <gazebo>
-    <plugin name="right_tilt_unit_model" filename="librotors_gazebo_motor_model.so">
-      <robotNamespace>kamikaze</robotNamespace>
-      <jointName>kamikaze/tilt_unit_0_revolutejoint</jointName>
-      <linkName>kamikaze/tilt_unit_0</linkName>
+    <plugin name="elevon_unit_2_unit_model" filename="librotors_gazebo_motor_model.so">
+      <robotNamespace>${namespace}</robotNamespace>
+      <jointName>${namespace}/elevon_2_revolutejoint</jointName>
+      <linkName>${namespace}/elevon_unit_2</linkName>
       <turningDirection>ccw</turningDirection>
       <motorType>position</motorType>
-      <commandSubTopic>tilt_angle</commandSubTopic>
+      <commandSubTopic>command/elevon_2_angle</commandSubTopic>
       <motorNumber>2</motorNumber>
-      <motorSpeedPubTopic>tilt_motor_0/velocity</motorSpeedPubTopic>
-      <motorPositionPubTopic>tilt_motor_0/position</motorPositionPubTopic>
+      <motorSpeedPubTopic>elevon/2/velocity</motorSpeedPubTopic>
+      <motorPositionPubTopic>elevon/2/position</motorPositionPubTopic>
       <joint_control_pid>
         <p>1.0</p>
         <i>0.0</i>
@@ -148,8 +148,8 @@
     </plugin>
   </gazebo>
 
-  <gazebo reference="${namespace}/tilt_unit_0">
-    <material>Gazebo/White</material>
+  <gazebo reference="${namespace}/elevon_unit_2">
+    <material>Gazebo/Red</material>
   </gazebo>
 
   <!-- Elevon -->

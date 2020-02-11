@@ -102,7 +102,8 @@
 
   <joint name="${namespace}/elevon_2_revolutejoint" type="continuous">
     <axis xyz="1 0 0" />
-    <origin xyz="2 0 0.059" rpy="0 0 0" />
+    <property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
+    <origin xyz="0.002 0 0.0008" rpy="0 0 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevon_unit_2" />
   </joint>
@@ -114,7 +115,8 @@
     </inertial>
     <visual>
       <geometry>
-        <box size="0.5 0.2 0.5"/>
+        <!-- <box size="0.5 0.2 0.5"/> -->
+        <mesh filename="package://rotors_description/meshes/elevon_left.dae"/>
       </geometry>
     </visual>
     <collision>
@@ -149,6 +151,62 @@
   </gazebo>
 
   <gazebo reference="${namespace}/elevon_unit_2">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
+  <!-- elevon 2 -->
+  <joint name="${namespace}/elevon_3_revolutejoint" type="continuous">
+    <axis xyz="1 0 0" />
+    <property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
+    <!-- <origin xyz="-2 0.1 -0.8" rpy="0 0 0" /> -->
+    <parent link="${namespace}/base_link" />
+    <child link="${namespace}/elevon_unit_3"/>
+
+  </joint>
+
+  <link name="${namespace}/elevon_unit_3">
+    <inertial>
+      <mass value="0.1" />
+      <xacro:insert_block name="body_inertia" />
+    </inertial>
+    <visual>
+      <geometry>
+        <!-- <box size="0.5 0.2 0.5"/> -->
+        <mesh filename="package://rotors_description/meshes/elevon_rigth.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.005 0.005 0.005" />
+        <!-- [m] -->
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo>
+    <plugin name="elevon_unit_3_unit_model" filename="librotors_gazebo_motor_model.so">
+      <robotNamespace>${namespace}</robotNamespace>
+      <jointName>${namespace}/elevon_3_revolutejoint</jointName>
+      <linkName>${namespace}/elevon_unit_3</linkName>
+      <turningDirection>ccw</turningDirection>
+      <motorType>position</motorType>
+      <commandSubTopic>command/elevon_3_angle</commandSubTopic>
+      <motorNumber>3</motorNumber>
+      <motorSpeedPubTopic>elevon/3/velocity</motorSpeedPubTopic>
+      <motorPositionPubTopic>elevon/3/position</motorPositionPubTopic>
+      <joint_control_pid>
+        <p>0.5</p>
+        <i>0.5</i>
+        <d>0.1</d>
+        <iMax>1.0</iMax>
+        <iMin>-1.0</iMin>
+        <cmdMax>2.0</cmdMax>
+        <cmdMin>-2.0</cmdMin>
+      </joint_control_pid>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="${namespace}/elevon_unit_3">
     <material>Gazebo/Red</material>
   </gazebo>
 

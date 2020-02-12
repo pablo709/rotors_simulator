@@ -103,7 +103,7 @@
   <joint name="${namespace}/elevon_2_revolutejoint" type="continuous">
     <axis xyz="1 0 0" />
     <property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
-    <origin xyz="0.002 0 0.0008" rpy="0 0 0" />
+    <origin xyz="0.11 0 -0.088" rpy="0 0.17 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevon_unit_2" />
   </joint>
@@ -113,16 +113,19 @@
       <mass value="0.1" />
       <xacro:insert_block name="body_inertia" />
     </inertial>
+
     <visual>
+      <origin xyz="0.135 0 -0.0175" rpy="0 0 0" />
       <geometry>
-        <!-- <box size="0.5 0.2 0.5"/> -->
-        <mesh filename="package://rotors_description/meshes/elevon_left.dae"/>
+        <box size="0.27 0.01 0.035"/>
+        <!-- <mesh filename="package://rotors_description/meshes/elevon_left.dae"/> -->
       </geometry>
     </visual>
+
     <collision>
+      <origin xyz="0.135 0 -0.0175" rpy="0 0 0" />
       <geometry>
-        <box size="0.005 0.005 0.005" />
-        <!-- [m] -->
+        <box size="0.27 0.01 0.035"/>
       </geometry>
     </collision>
   </link>
@@ -135,7 +138,7 @@
       <turningDirection>ccw</turningDirection>
       <motorType>position</motorType>
       <commandSubTopic>command/elevon_2_angle</commandSubTopic>
-      <motorNumber>2</motorNumber>
+      <motorNumber>0</motorNumber>
       <motorSpeedPubTopic>elevon/2/velocity</motorSpeedPubTopic>
       <motorPositionPubTopic>elevon/2/position</motorPositionPubTopic>
       <joint_control_pid>
@@ -158,7 +161,7 @@
   <joint name="${namespace}/elevon_3_revolutejoint" type="continuous">
     <axis xyz="1 0 0" />
     <property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
-    <!-- <origin xyz="-2 0.1 -0.8" rpy="0 0 0" /> -->
+    <origin xyz="-0.11 0 -0.088" rpy="0 2.96 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevon_unit_3"/>
 
@@ -170,17 +173,19 @@
       <xacro:insert_block name="body_inertia" />
     </inertial>
     <visual>
-      <geometry>
-        <!-- <box size="0.5 0.2 0.5"/> -->
-        <mesh filename="package://rotors_description/meshes/elevon_rigth.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="0.005 0.005 0.005" />
-        <!-- [m] -->
-      </geometry>
-    </collision>
+        <origin xyz="0.135 0 0.0175" rpy="0 0 0" />
+        <geometry>
+          <box size="0.27 0.01 0.035"/>
+          <!-- <mesh filename="package://rotors_description/meshes/elevon_left.dae"/> -->
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="-0.135 0 -0.0175" rpy="0 0 0" />
+        <geometry>
+          <box size="0.27 0.01 0.035"/>
+        </geometry>
+      </collision>
   </link>
 
   <gazebo>
@@ -191,7 +196,7 @@
       <turningDirection>ccw</turningDirection>
       <motorType>position</motorType>
       <commandSubTopic>command/elevon_3_angle</commandSubTopic>
-      <motorNumber>3</motorNumber>
+      <motorNumber>1</motorNumber>
       <motorSpeedPubTopic>elevon/3/velocity</motorSpeedPubTopic>
       <motorPositionPubTopic>elevon/3/position</motorPositionPubTopic>
       <joint_control_pid>

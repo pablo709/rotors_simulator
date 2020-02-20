@@ -212,7 +212,7 @@
   </gazebo>
 
   <gazebo>
-    <plugin name="wing_0" filename="3libLiftDragPlugin.so">
+    <plugin name="wing_0" filename="libLiftDragPlugin.so">
       <a0>0.0</a0>
       <cla>4.752798721</cla>
       <cda>0.6417112299</cda>

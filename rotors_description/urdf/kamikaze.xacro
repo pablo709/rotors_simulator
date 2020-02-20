@@ -21,7 +21,7 @@
   <xacro:property name="moment_constant" value="0.016" /> <!-- [m] -->
   <xacro:property name="time_constant_up" value="0.0125" /> <!-- [s] -->
   <xacro:property name="time_constant_down" value="0.025" /> <!-- [s] -->
-  <xacro:property name="max_rot_velocity" value="838" /> <!-- [rad/s] -->
+  <xacro:property name="max_rot_velocity" value="1838" /> <!-- [rad/s] -->
   <xacro:property name="rotor_drag_coefficient" value="8.06428e-05" />
   <xacro:property name="rolling_moment_coefficient" value="0.000001" />
 
@@ -208,6 +208,25 @@
         <cmdMax>2.0</cmdMax>
         <cmdMin>-2.0</cmdMin>
       </joint_control_pid>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="wing_0" filename="3libLiftDragPlugin.so">
+      <a0>0.0</a0>
+      <cla>4.752798721</cla>
+      <cda>0.6417112299</cda>
+      <cma>-1.8</cma>
+      <alpha_stall>0.3391428111</alpha_stall>
+      <cla_stall>-3.85</cla_stall>
+      <cda_stall>-0.9233984055</cda_stall>
+      <cma_stall>0</cma_stall>
+      <cp>-0.1 0 -0.5</cp>
+      <area>0.05</area>
+      <air_density>1.2041</air_density>
+      <forward>0 0 1</forward>
+      <upward>0 1 0</upward>
+      <link_name>${namespace}/base_link</link_name>
     </plugin>
   </gazebo>
 

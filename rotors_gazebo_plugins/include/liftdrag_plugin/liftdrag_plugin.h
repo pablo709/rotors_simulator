@@ -132,6 +132,12 @@ namespace gazebo
     /// value.
     protected: double controlJointRadToCL;
 
+    /// \brief Pointer to a joint that generate wind over this lifting body
+    protected: physics::JointPtr velocityJoint;
+
+    /// \brief Dont really know what this variable is for //TODO: investigate!!!
+    protected: double rotorVelocitySlowdownSim;
+
     /// \brief SDF for this plugin;
     protected: sdf::ElementPtr sdf;
   };

@@ -155,6 +155,23 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
 
   if (_sdf->HasElement("control_joint_rad_to_cl"))
     this->controlJointRadToCL = _sdf->Get<double>("control_joint_rad_to_cl");
+
+
+  if (_sdf->HasElement("velocity_joint_name"))
+  {
+    std::string velocityJointName = _sdf->Get<std::string>("velocity_joint_name");
+    this->velocityJoint = this->model->GetJoint(velocityJointName);
+    if (!this->velocityJoint)
+    {
+      gzerr << "Joint with name[" << velocityJoint << "] does not exist.\n";
+    }
+  }
+  
+  if (_sdf->HasElement("rotorVelocitySlowdownSim")){
+    this->rotorVelocitySlowdownSim = _sdf->Get<double>("rotorVelocitySlowdownSim");
+  }else{
+    this->rotorVelocitySlowdownSim = 10;
+  }
 }
 
 /////////////////////////////////////////////////
@@ -162,7 +179,20 @@ void LiftDragPlugin::OnUpdate()
 {
   GZ_ASSERT(this->link, "Link was NULL");
   // get linear velocity at cp in inertial frame
-  ignition::math::Vector3d vel = this->link->WorldLinearVel(this->cp);
+  ignition::math::Vector3d vel;
+
+  if (this->velocityJoint){
+    double motor_rot_vel_ = this->velocityJoint->GetVelocity(0);
+
+    double real_motor_velocity =
+          motor_rot_vel_ * this->rotorVelocitySlowdownSim;
+    ignition::math::Vector3d vel_axis = this->velocityJoint->GlobalAxis(0);//FIXME: puse aca 0 pero no entiendo realemte de donde sale
+    vel_axis.Normalize();
+    vel = vel_axis*real_motor_velocity;
+
+  }else{
+    vel = this->link->WorldLinearVel(this->cp);
+  }
   ignition::math::Vector3d velI = vel;
   velI.Normalize();
 

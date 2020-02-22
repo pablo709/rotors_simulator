@@ -172,6 +172,12 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
   }else{
     this->rotorVelocitySlowdownSim = 10;
   }
+
+  if (_sdf->HasElement("motorConstant")){
+    this->motor_constant = _sdf->Get<double>("motorConstant");
+  }else{
+    this->motor_constant = 8.54858e-06;
+  }
 }
 
 /////////////////////////////////////////////////
@@ -180,16 +186,18 @@ void LiftDragPlugin::OnUpdate()
   GZ_ASSERT(this->link, "Link was NULL");
   // get linear velocity at cp in inertial frame
   ignition::math::Vector3d vel;
-
+  double motor_rot_vel_=0;
+  double linearVe=0;
   if (this->velocityJoint){
-    double motor_rot_vel_ = this->velocityJoint->GetVelocity(0);
+    motor_rot_vel_ = this->velocityJoint->GetVelocity(0);
 
     double real_motor_velocity =
           motor_rot_vel_ * this->rotorVelocitySlowdownSim;
-    ignition::math::Vector3d vel_axis = this->velocityJoint->GlobalAxis(0);//FIXME: puse aca 0 pero no entiendo realemte de donde sale
-    vel_axis.Normalize();
-    vel = vel_axis*real_motor_velocity;
 
+    linearVe= real_motor_velocity * (sqrt(2 * this->motor_constant/(this->rho * this->area)));
+    
+    vel = ignition::math::Vector3d (0, 0, linearVe);
+    
   }else{
     vel = this->link->WorldLinearVel(this->cp);
   }

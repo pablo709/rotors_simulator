@@ -138,6 +138,9 @@ namespace gazebo
     /// \brief Dont really know what this variable is for //TODO: investigate!!!
     protected: double rotorVelocitySlowdownSim;
 
+    /// \brief Motor propeller constant
+    protected: double motor_constant;
+
     /// \brief SDF for this plugin;
     protected: sdf::ElementPtr sdf;
   };

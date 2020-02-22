@@ -231,6 +231,7 @@
       <control_joint_rad_to_cl>-0.5</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_0_joint</velocity_joint_name>
       <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
+      <motorConstant>${motor_constant}</motorConstant>
     </plugin>
   </gazebo>
 

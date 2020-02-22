@@ -227,6 +227,11 @@
       <forward>0 0 1</forward>
       <upward>0 1 0</upward>
       <link_name>${namespace}/base_link</link_name>
+      <control_joint_name>${namespace}/elevon_2_revolutejoint</control_joint_name>
+      <control_joint_rad_to_cl>-0.5</control_joint_rad_to_cl>
+      <velocity_joint_name>${namespace}/rotor_0_joint</velocity_joint_name>
+      <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
+      <motorConstant>${motor_constant}</motorConstant>
     </plugin>
   </gazebo>
 

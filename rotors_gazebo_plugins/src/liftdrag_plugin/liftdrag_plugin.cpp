@@ -155,6 +155,29 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
 
   if (_sdf->HasElement("control_joint_rad_to_cl"))
     this->controlJointRadToCL = _sdf->Get<double>("control_joint_rad_to_cl");
+
+
+  if (_sdf->HasElement("velocity_joint_name"))
+  {
+    std::string velocityJointName = _sdf->Get<std::string>("velocity_joint_name");
+    this->velocityJoint = this->model->GetJoint(velocityJointName);
+    if (!this->velocityJoint)
+    {
+      gzerr << "Joint with name[" << velocityJoint << "] does not exist.\n";
+    }
+  }
+  
+  if (_sdf->HasElement("rotorVelocitySlowdownSim")){
+    this->rotorVelocitySlowdownSim = _sdf->Get<double>("rotorVelocitySlowdownSim");
+  }else{
+    this->rotorVelocitySlowdownSim = 10;
+  }
+
+  if (_sdf->HasElement("motorConstant")){
+    this->motor_constant = _sdf->Get<double>("motorConstant");
+  }else{
+    this->motor_constant = 8.54858e-06;
+  }
 }
 
 /////////////////////////////////////////////////
@@ -162,7 +185,22 @@ void LiftDragPlugin::OnUpdate()
 {
   GZ_ASSERT(this->link, "Link was NULL");
   // get linear velocity at cp in inertial frame
-  ignition::math::Vector3d vel = this->link->WorldLinearVel(this->cp);
+  ignition::math::Vector3d vel;
+  double motor_rot_vel_=0;
+  double linearVe=0;
+  if (this->velocityJoint){
+    motor_rot_vel_ = this->velocityJoint->GetVelocity(0);
+
+    double real_motor_velocity =
+          motor_rot_vel_ * this->rotorVelocitySlowdownSim;
+
+    linearVe= real_motor_velocity * (sqrt(2 * this->motor_constant/(this->rho * this->area)));
+    
+    vel = ignition::math::Vector3d (0, 0, linearVe);
+    
+  }else{
+    vel = this->link->WorldLinearVel(this->cp);
+  }
   ignition::math::Vector3d velI = vel;
   velI.Normalize();
 

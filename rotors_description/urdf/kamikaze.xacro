@@ -246,13 +246,13 @@
       <cla_stall>${cla_stall}</cla_stall>
       <cda_stall>${cda_stall}</cda_stall>
       <cma_stall>${cma_stall}</cma_stall>
-      <cp>-0.1 0 -0.5</cp><!-- FIXME!!!! -->
+      <cp>-0.228 0 0.0318</cp><!-- FIXME!!!! -->
       <area>${area}</area>
       <air_density>${air_density}</air_density>
       <forward>0 0 1</forward>
       <upward>0 1 0</upward>
       <link_name>${namespace}/base_link</link_name>
-      <control_joint_name>${namespace}/elevon_2_revolutejoint</control_joint_name>
+      <control_joint_name>${namespace}/elevon_3_revolutejoint</control_joint_name>
       <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_0_joint</velocity_joint_name>
       <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
@@ -271,13 +271,13 @@
       <cla_stall>${cla_stall}</cla_stall>
       <cda_stall>${cda_stall}</cda_stall>
       <cma_stall>${cma_stall}</cma_stall>
-      <cp>-0.1 0 -0.5</cp><!-- FIXME!!!! -->
+      <cp>0.228 0 0.0318</cp><!-- FIXME!!!! -->
       <area>${area}</area>
       <air_density>${air_density}</air_density>
       <forward>0 0 1</forward>
       <upward>0 1 0</upward>
       <link_name>${namespace}/base_link</link_name>
-      <control_joint_name>${namespace}/elevon_3_revolutejoint</control_joint_name>
+      <control_joint_name>${namespace}/elevon_2_revolutejoint</control_joint_name>
       <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_1_joint</velocity_joint_name>
       <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>

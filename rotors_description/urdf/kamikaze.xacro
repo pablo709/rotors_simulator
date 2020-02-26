@@ -25,6 +25,25 @@
   <xacro:property name="rotor_drag_coefficient" value="8.06428e-05" />
   <xacro:property name="rolling_moment_coefficient" value="0.000001" />
 
+  <!-- Aerodynamics -->
+  <!-- Henry's -->
+  <xacro:property name="ao"           value="-0.0131" />
+  <xacro:property name="cla"          value="6.4983" />
+  <xacro:property name="alpha_stall"  value="0.284" />
+  <xacro:property name="cla_stall"    value="-3.8268" />
+  <xacro:property name="area"         value="0.040132" /> <!-- in m^2, dont know if its ok -->
+
+  <!-- World -->
+  <xacro:property name="air_density"  value="1.2041" />
+
+  <!-- TBC - this parameters are from plane.sdf -->
+  <xacro:property name="cda"          value="0.6417112299" />
+  <xacro:property name="cma"          value="-1.8" />
+  <xacro:property name="cda_stall"    value="-0.9233984055" />
+  <xacro:property name="cma_stall"    value="0.0" />
+
+
+
   <!-- Property Blocks -->
   <xacro:property name="body_inertia">
     <inertia ixx="0.006" ixy="0.0" ixz="0.0" iyy="0.074" iyz="0.0" izz="0.069" /> <!-- [kg m^2] [kg m^2] [kg m^2] [kg m^2] [kg m^2] [kg m^2] -->
@@ -188,6 +207,10 @@
       </collision>
   </link>
 
+  <gazebo reference="${namespace}/elevon_unit_3">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
   <gazebo>
     <plugin name="elevon_unit_3_unit_model" filename="librotors_gazebo_motor_model.so">
       <robotNamespace>${namespace}</robotNamespace>
@@ -211,57 +234,56 @@
     </plugin>
   </gazebo>
 
+
+  <!-- liftDrag 1 -->
   <gazebo>
     <plugin name="wing_0" filename="libLiftDragPlugin.so">
-      <a0>0.0</a0>
-      <cla>4.752798721</cla>
-      <cda>0.6417112299</cda>
-      <cma>-1.8</cma>
-      <alpha_stall>0.3391428111</alpha_stall>
-      <cla_stall>-3.85</cla_stall>
-      <cda_stall>-0.9233984055</cda_stall>
-      <cma_stall>0</cma_stall>
-      <cp>-0.1 0 -0.5</cp>
-      <area>0.05</area>
-      <air_density>1.2041</air_density>
+      <a0>${a0}</a0>
+      <cla>${cla}</cla>
+      <cda>${cda}</cda>
+      <cma>${cma}</cma>
+      <alpha_stall>${alpha_stall}</alpha_stall>
+      <cla_stall>${cla_stall}</cla_stall>
+      <cda_stall>${cda_stall}</cda_stall>
+      <cma_stall>${cma_stall}</cma_stall>
+      <cp>-0.1 0 -0.5</cp><!-- FIXME!!!! -->
+      <area>${area}</area>
+      <air_density>${air_density}</air_density>
       <forward>0 0 1</forward>
       <upward>0 1 0</upward>
       <link_name>${namespace}/base_link</link_name>
       <control_joint_name>${namespace}/elevon_2_revolutejoint</control_joint_name>
-      <control_joint_rad_to_cl>-0.5</control_joint_rad_to_cl>
+      <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_0_joint</velocity_joint_name>
       <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
       <motorConstant>${motor_constant}</motorConstant>
     </plugin>
   </gazebo>
 
-  <gazebo reference="${namespace}/elevon_unit_3">
-    <material>Gazebo/Red</material>
+  <!-- liftDrag 2 -->
+  <gazebo>
+    <plugin name="wing_1" filename="libLiftDragPlugin.so">
+      <a0>${a0}</a0>
+      <cla>${cla}</cla>
+      <cda>${cda}</cda>
+      <cma>${cma}</cma>
+      <alpha_stall>${alpha_stall}</alpha_stall>
+      <cla_stall>${cla_stall}</cla_stall>
+      <cda_stall>${cda_stall}</cda_stall>
+      <cma_stall>${cma_stall}</cma_stall>
+      <cp>-0.1 0 -0.5</cp><!-- FIXME!!!! -->
+      <area>${area}</area>
+      <air_density>${air_density}</air_density>
+      <forward>0 0 1</forward>
+      <upward>0 1 0</upward>
+      <link_name>${namespace}/base_link</link_name>
+      <control_joint_name>${namespace}/elevon_3_revolutejoint</control_joint_name>
+      <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
+      <velocity_joint_name>${namespace}/rotor_1_joint</velocity_joint_name>
+      <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
+      <motorConstant>${motor_constant}</motorConstant>
+    </plugin>
   </gazebo>
 
-  <!-- Elevon -->
-  <!-- <joint name="rotor_${motor_number}_joint" type="continuous">
-    <origin xyz="0 0 ${rotor_offset_top}" rpy="0 0 0" />
-    <axis xyz="0 0 1" />
-    <parent link="${namespace}/tilt_unit_${motor_number}" />
-    <child link="rotor_${motor_number}" />
-  </joint>
-
-  <link name="rotor_${motor_number}">
-    <inertial>
-      <mass value="${mass_rotor}" />
-      <xacro:insert_block name="inertia" />
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh filename="package://rotors_description/meshes/${mesh}_${direction}.dae" scale="${radius_rotor} ${radius_rotor} ${radius_rotor}" />
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.005" radius="${radius_rotor}" />
-      </geometry>
-    </collision>
-  </link> -->
 
 </robot>

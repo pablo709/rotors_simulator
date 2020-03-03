@@ -43,7 +43,7 @@
   <xacro:property name="cma"          value="-1.8" />
   <xacro:property name="cda_stall"    value="-0.9233984055" />
   <xacro:property name="cma_stall"    value="0.0" />
-  <xacro:property name="control_joint_rad_to_cl"    value="-1.5" />
+  <xacro:property name="control_joint_rad_to_cl"    value="-0.5" />
 
   <!-- Property Blocks -->
   <xacro:property name="body_inertia">

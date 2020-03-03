@@ -229,11 +229,35 @@
     </plugin>
   </gazebo>
 
+  <link name="esfera">
+    <inertial>
+      <mass value="0.0000001" /> <!-- [kg] -->
+      <xacro:insert_block name="elevon_inertia" />
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="0.05" />  
+      </geometry>
+    </visual>
+  </link>
+
+  <gazebo reference="esfera">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
   <joint name="world_fixed" type="continuous">
      <parent link="world"/>
-     <child link="${namespace}/base_link"/>
-     <axis xyz="0 0 1" />
+     <child link="esfera"/>
+     <axis xyz="1 0 0" />
      <origin xyz="0 0 1" rpy="0 0 0" />
+  </joint>
+
+  <joint name="CoG" type="fixed">
+    <origin xyz="0 0 .05" rpy="0 0 0" />
+    <child link="${namespace}/base_link"/>
+    <parent link="esfera"/>
+    <!-- <axis xyz="1 0 0" /> -->
+    <!-- <origin xyz="0 0 1" rpy="0 0 0" /> -->
   </joint>
 
 </robot>

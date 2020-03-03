@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot name="kamikaze" xmlns:xacro="http://ros.org/wiki/xacro">
   
+  <link name="world"/>
   <!-- Included URDF Motors Files -->
   <xacro:include filename="$(find rotors_description)/urdf/kamikaze_properties.xacro" />
   <!-- Included URDF Motors Files -->
@@ -180,7 +181,7 @@
 
   <!-- liftDrag 1 -->
   <gazebo>
-    <plugin name="wing_0" filename="libLiftDragPlugin.so">
+    <plugin name="wing_0" filename="/home/sheila/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
       <a0>${a0}</a0>
       <cla>${cla}</cla>
       <cda>${cda}</cda>
@@ -205,7 +206,7 @@
 
   <!-- liftDrag 2 -->
   <gazebo>
-    <plugin name="wing_1" filename="libLiftDragPlugin.so">
+    <plugin name="wing_1" filename="/home/sheila/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
       <a0>${a0}</a0>
       <cla>${cla}</cla>
       <cda>${cda}</cda>
@@ -227,5 +228,12 @@
       <motorConstant>${motor_constant}</motorConstant>
     </plugin>
   </gazebo>
+
+  <joint name="world_fixed" type="continuous">
+     <parent link="world"/>
+     <child link="${namespace}/base_link"/>
+     <axis xyz="0 0 1" />
+     <origin xyz="0 0 1" rpy="0 0 0" />
+  </joint>
 
 </robot>

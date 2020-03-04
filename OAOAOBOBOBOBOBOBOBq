@@ -1,0 +1,91 @@
+[1mdiff --git a/rotors_description/urdf/kamikaze.xacro b/rotors_description/urdf/kamikaze.xacro[m
+[1mindex 99bba18..124d2fc 100644[m
+[1m--- a/rotors_description/urdf/kamikaze.xacro[m
+[1m+++ b/rotors_description/urdf/kamikaze.xacro[m
+[36m@@ -181,7 +181,7 @@[m
+ [m
+   <!-- liftDrag 1 -->[m
+   <gazebo>[m
+[31m-    <plugin name="wing_0" filename="/home/sheila/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">[m
+[32m+[m[32m    <plugin name="wing_0" filename="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">[m
+       <a0>${a0}</a0>[m
+       <cla>${cla}</cla>[m
+       <cda>${cda}</cda>[m
+[36m@@ -206,7 +206,7 @@[m
+ [m
+   <!-- liftDrag 2 -->[m
+   <gazebo>[m
+[31m-    <plugin name="wing_1" filename="/home/sheila/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">[m
+[32m+[m[32m    <plugin name="wing_1" filename="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">[m
+       <a0>${a0}</a0>[m
+       <cla>${cla}</cla>[m
+       <cda>${cda}</cda>[m
+[36m@@ -231,7 +231,7 @@[m
+ [m
+   <link name="esfera">[m
+     <inertial>[m
+[31m-      <mass value="0.0000001" /> <!-- [kg] -->[m
+[32m+[m[32m      <mass value="0.0000001" />[m[41m [m
+       <xacro:insert_block name="elevon_inertia" />[m
+     </inertial>[m
+     <visual>[m
+[36m@@ -239,25 +239,52 @@[m
+         <sphere radius="0.05" />  [m
+       </geometry>[m
+     </visual>[m
+[31m-  </link>[m
+[32m+[m[32m  </link>[m[41m [m
+ [m
+[31m-  <gazebo reference="esfera">[m
+[32m+[m[32m   <gazebo reference="esfera">[m
+     <material>Gazebo/Green</material>[m
+   </gazebo>[m
+ [m
+[31m-  <joint name="world_fixed" type="continuous">[m
+[32m+[m
+[32m+[m[32m<!-- Control de altura -->[m
+[32m+[m[32m<!-- <joint name="world_fixed" type="prismatic">[m
+[32m+[m[32m  <parent link="world"/>[m
+[32m+[m[32m  <child link="esfera"/>[m
+[32m+[m[32m  <axis xyz="0 0 1" />[m
+[32m+[m[32m  <origin xyz="0 0 0" rpy="0 0 0" />[m
+[32m+[m[32m  <limit lower="0" upper="50" effort="20000" velocity="20000"/>[m
+[32m+[m[32m</joint> -->[m
+[32m+[m
+[32m+[m[32m<!-- Control de roll -->[m
+[32m+[m[32m  <!-- <joint name="world_fixed" type="continuous">[m
+[32m+[m[32m    <parent link="world"/>[m
+[32m+[m[32m    <child link="esfera"/>[m
+[32m+[m[32m    <axis xyz="0 1 0" />[m
+[32m+[m[32m    <origin xyz="0 0 1" rpy="0 0 0" />[m
+[32m+[m[32m  </joint> -->[m
+[32m+[m
+[32m+[m
+[32m+[m[32m<!-- Control de pitch -->[m
+[32m+[m[32m  <!-- <joint name="world_fixed" type="continuous">[m
+      <parent link="world"/>[m
+      <child link="esfera"/>[m
+      <axis xyz="1 0 0" />[m
+      <origin xyz="0 0 1" rpy="0 0 0" />[m
+[32m+[m[32m  </joint> -->[m
+[32m+[m
+[32m+[m[32m<!-- Contro de yaw -->[m
+[32m+[m[32m  <joint name="world_fixed" type="continuous">[m
+[32m+[m[32m    <parent link="world"/>[m
+[32m+[m[32m    <child link="esfera"/>[m
+[32m+[m[32m    <axis xyz="0 0 1" />[m
+[32m+[m[32m    <origin xyz="0 0 1" rpy="0 0 0" />[m
+   </joint>[m
+ [m
+[31m-  <joint name="CoG" type="fixed">[m
+[31m-    <origin xyz="0 0 .05" rpy="0 0 0" />[m
+[32m+[m[32m  <joint name="CoG" type="continuous">[m
+     <child link="${namespace}/base_link"/>[m
+     <parent link="esfera"/>[m
+[31m-    <!-- <axis xyz="1 0 0" /> -->[m
+[31m-    <!-- <origin xyz="0 0 1" rpy="0 0 0" /> -->[m
+[32m+[m[32m    <origin xyz="0 0 .05" rpy="0 0 0" />[m
+[32m+[m[32m    <axis xyz="0 0 1" />[m
+   </joint>[m
+ [m
+ </robot>[m

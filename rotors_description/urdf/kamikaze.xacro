@@ -181,7 +181,7 @@
 
   <!-- liftDrag 1 -->
   <gazebo>
-    <plugin name="wing_0" filename="/home/sheila/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
+    <plugin name="wing_0" filename="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
       <a0>${a0}</a0>
       <cla>${cla}</cla>
       <cda>${cda}</cda>
@@ -206,7 +206,7 @@
 
   <!-- liftDrag 2 -->
   <gazebo>
-    <plugin name="wing_1" filename="/home/sheila/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
+    <plugin name="wing_1" filename="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
       <a0>${a0}</a0>
       <cla>${cla}</cla>
       <cda>${cda}</cda>
@@ -231,7 +231,7 @@
 
   <link name="esfera">
     <inertial>
-      <mass value="0.0000001" /> <!-- [kg] -->
+      <mass value="0.0000001" /> 
       <xacro:insert_block name="elevon_inertia" />
     </inertial>
     <visual>
@@ -239,25 +239,51 @@
         <sphere radius="0.05" />  
       </geometry>
     </visual>
-  </link>
+  </link> 
 
-  <gazebo reference="esfera">
+   <gazebo reference="esfera">
     <material>Gazebo/Green</material>
   </gazebo>
 
-  <joint name="world_fixed" type="continuous">
+
+<!-- Control de altura -->
+<joint name="world_fixed" type="prismatic">
+  <parent link="world"/>
+  <child link="esfera"/>
+  <axis xyz="0 0 1" />
+  <origin xyz="0 0 1" rpy="0 0 0" />
+  <limit lower="0" upper="50" effort="20000" velocity="20000"/>
+</joint>
+
+<!-- Control de roll -->
+  <!-- <joint name="world_fixed" type="continuous">
+    <parent link="world"/>
+    <child link="esfera"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 1" rpy="0 0 0" />
+  </joint> -->
+
+
+<!-- Control de pitch -->
+  <!-- <joint name="world_fixed" type="continuous">
      <parent link="world"/>
      <child link="esfera"/>
      <axis xyz="1 0 0" />
      <origin xyz="0 0 1" rpy="0 0 0" />
-  </joint>
+  </joint> -->
+
+<!-- Contro de yaw -->
+  <!-- <joint name="world_fixed" type="continuous">
+    <parent link="world"/>
+    <child link="${namespace}/base_link"/>
+    <axis xyz="0 0 1" />
+    <origin xyz="0 0 1" rpy="0 0 0" />
+  </joint> -->
 
   <joint name="CoG" type="fixed">
     <origin xyz="0 0 .05" rpy="0 0 0" />
     <child link="${namespace}/base_link"/>
     <parent link="esfera"/>
-    <!-- <axis xyz="1 0 0" /> -->
-    <!-- <origin xyz="0 0 1" rpy="0 0 0" /> -->
   </joint>
 
 </robot>

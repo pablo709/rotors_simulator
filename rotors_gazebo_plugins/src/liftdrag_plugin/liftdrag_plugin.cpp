@@ -196,7 +196,7 @@ void LiftDragPlugin::OnUpdate()
 
     linearVe= real_motor_velocity * (sqrt(2 * this->motor_constant/(this->rho * this->area)));
     
-    vel = ignition::math::Vector3d (0, 0, linearVe);
+    vel = ignition::math::Vector3d (0, 0, abs(linearVe));
     
   }else{
     vel = this->link->WorldLinearVel(this->cp);

@@ -191,22 +191,6 @@ void LiftDragPlugin::OnUpdate()
   // rotate forward and upward vectors into inertial frame
   ignition::math::Vector3d forwardI = pose.Rot().RotateVector(this->forward);
 
-  ignition::math::Vector3d upwardI;
-  if (this->radialSymmetry)
-  {
-    // use inflow velocity to determine upward direction
-    // which is the component of inflow perpendicular to forward direction.
-    ignition::math::Vector3d tmp = forwardI.Cross(velI);
-    upwardI = forwardI.Cross(tmp).Normalize();
-  }
-  else
-  {
-    upwardI = pose.Rot().RotateVector(this->upward);
-  }
-
-  // spanwiseI: a vector normal to lift-drag-plane described in inertial frame
-  ignition::math::Vector3d spanwiseI = forwardI.Cross(upwardI).Normalize();
-
   // get linear velocity at cp in inertial frame
   ignition::math::Vector3d vel;
   double motor_rot_vel_=0;
@@ -235,6 +219,23 @@ void LiftDragPlugin::OnUpdate()
 
   if (vel.Length() <= 0.01)
     return;
+
+  ignition::math::Vector3d upwardI;
+  if (this->radialSymmetry)
+  {
+    // use inflow velocity to determine upward direction
+    // which is the component of inflow perpendicular to forward direction.
+    ignition::math::Vector3d tmp = forwardI.Cross(velI);
+    upwardI = forwardI.Cross(tmp).Normalize();
+  }
+  else
+  {
+    upwardI = pose.Rot().RotateVector(this->upward);
+  }
+
+  // spanwiseI: a vector normal to lift-drag-plane described in inertial frame
+  ignition::math::Vector3d spanwiseI = forwardI.Cross(upwardI).Normalize();
+
 
   const double minRatio = -1.0;
   const double maxRatio = 1.0;

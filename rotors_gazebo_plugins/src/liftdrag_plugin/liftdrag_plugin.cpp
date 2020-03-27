@@ -17,7 +17,7 @@
 
 #include <algorithm>
 #include <string>
-
+#include <ros/ros.h>
 #include "gazebo/common/Assert.hh"
 #include "gazebo/physics/physics.hh"
 #include "gazebo/sensors/SensorManager.hh"
@@ -183,6 +183,7 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
 /////////////////////////////////////////////////
 void LiftDragPlugin::OnUpdate()
 {
+  // ROS_INFO("OnUpdate ");
   GZ_ASSERT(this->link, "Link was NULL");
   // get linear velocity at cp in inertial frame
   ignition::math::Vector3d vel;
@@ -197,7 +198,7 @@ void LiftDragPlugin::OnUpdate()
     linearVe= real_motor_velocity * (sqrt(2 * this->motor_constant/(this->rho * this->area)));
     
     vel = ignition::math::Vector3d (0, 0, linearVe);
-    
+
   }else{
     vel = this->link->WorldLinearVel(this->cp);
   }
@@ -240,6 +241,7 @@ void LiftDragPlugin::OnUpdate()
   double sinSweepAngle = ignition::math::clamp(
       spanwiseI.Dot(velI), minRatio, maxRatio);
 
+  
   // get cos from trig identity
   double cosSweepAngle = 1.0 - sinSweepAngle * sinSweepAngle;
   this->sweep = asin(sinSweepAngle);
@@ -317,6 +319,12 @@ void LiftDragPlugin::OnUpdate()
   else
     cl = this->cla * this->alpha * cosSweepAngle;
 
+  // ROS_INFO("cosAlpha: %f", cosAlpha);
+  // ROS_INFO("alpha0: %f", this->alpha0);
+  // ROS_INFO("alpha: %f", this->alpha);
+  // ROS_INFO("sinSweepAngle: %f", sinSweepAngle);
+  // ROS_INFO("cosSweepAngle: %f", cosSweepAngle);
+  // ROS_INFO("cl: %f",cl);
   // modify cl per control joint value
   if (this->controlJoint)
   {

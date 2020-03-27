@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="kamikaze" xmlns:xacro="http://ros.org/wiki/xacro">
   
-  <link name="world"/>
+  <!-- <link name="world"/> -->
   <!-- Included URDF Motors Files -->
   <xacro:include filename="$(find rotors_description)/urdf/kamikaze_properties.xacro" />
   <!-- Included URDF Motors Files -->
@@ -193,9 +193,10 @@
       <cp>-0.228 0 0.0318</cp><!-- FIXME!!!! -->
       <area>${area}</area>
       <air_density>${air_density}</air_density>
-      <forward>0 0 1</forward>
+      <forward>0 0 -1</forward>
       <upward>0 1 0</upward>
-      <link_name>${namespace}/base_link</link_name>
+     <!-- <link_name>${namespace}/base_link</link_name> -->
+      <link_name>esfera</link_name>
       <control_joint_name>${namespace}/elevon_3_revolutejoint</control_joint_name>
       <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_0_joint</velocity_joint_name>
@@ -220,7 +221,8 @@
       <air_density>${air_density}</air_density>
       <forward>0 0 1</forward>
       <upward>0 1 0</upward>
-      <link_name>${namespace}/base_link</link_name>
+      <!-- <link_name>${namespace}/base_link</link_name> -->
+      <link_name>esfera</link_name>
       <control_joint_name>${namespace}/elevon_2_revolutejoint</control_joint_name>
       <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_1_joint</velocity_joint_name>
@@ -229,25 +231,25 @@
     </plugin>
   </gazebo>
 
-  <link name="esfera">
+<!-- <link name="esfera">
     <inertial>
       <mass value="0.0000001" /> 
       <xacro:insert_block name="elevon_inertia" />
     </inertial>
     <visual>
       <geometry>
-        <sphere radius="0.05" />  
+        <sphere radius="0.005" />  
       </geometry>
     </visual>
   </link> 
 
    <gazebo reference="esfera">
     <material>Gazebo/Green</material>
-  </gazebo>
+  </gazebo> -->
 
 
 <!-- Control de altura -->
-<joint name="world_fixed" type="prismatic">
+<!-- <joint name="world_fixed" type="prismatic">
   <parent link="world"/>
   <child link="esfera"/>
   <axis xyz="0 0 1" />
@@ -259,7 +261,7 @@
   <parent link="esfera"/>
   <origin xyz="0 0 .05" rpy="0 0 0" />
   <axis xyz="0 0 1" />
-</joint>
+</joint> -->
 
 
 <!--  Control de Yaw-->
@@ -268,7 +270,7 @@
   <child link="esfera"/>
   <axis xyz="0 0 1" />
   <origin xyz="0 0 1" rpy="0 0 0" />
-</joint>
+</joint> 
 
 <joint name="CoG" type="fixed">
   <child link="${namespace}/base_link"/>
@@ -309,7 +311,7 @@
     <parent link="esfera"/>
     <origin xyz="0 0 .05" rpy="0 0 0" />
     <axis xyz="0 1 0" />
-  </joint>
- -->
+  </joint> -->
+
 
 </robot>

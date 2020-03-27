@@ -192,6 +192,7 @@ void LiftDragPlugin::OnUpdate()
   ignition::math::Vector3d forwardI = pose.Rot().RotateVector(this->forward);
 
   ignition::math::Vector3d upwardI;
+  ignition::math::Vector3d velI;
   if (this->radialSymmetry)
   {
     // use inflow velocity to determine upward direction
@@ -225,7 +226,7 @@ void LiftDragPlugin::OnUpdate()
   }else{
     vel = this->link->WorldLinearVel(this->cp);
   }
-  ignition::math::Vector3d velI = vel;
+  velI = vel;
   velI = velI.Normalize();
 
   // smoothing

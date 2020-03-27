@@ -17,7 +17,7 @@
 
 #include <algorithm>
 #include <string>
-
+#include "ros/ros.h"
 #include "gazebo/common/Assert.hh"
 #include "gazebo/physics/physics.hh"
 #include "gazebo/sensors/SensorManager.hh"
@@ -191,25 +191,9 @@ void LiftDragPlugin::OnUpdate()
   // rotate forward and upward vectors into inertial frame
   ignition::math::Vector3d forwardI = pose.Rot().RotateVector(this->forward);
 
-  ignition::math::Vector3d upwardI;
-  ignition::math::Vector3d velI;
-  if (this->radialSymmetry)
-  {
-    // use inflow velocity to determine upward direction
-    // which is the component of inflow perpendicular to forward direction.
-    ignition::math::Vector3d tmp = forwardI.Cross(velI);
-    upwardI = forwardI.Cross(tmp).Normalize();
-  }
-  else
-  {
-    upwardI = pose.Rot().RotateVector(this->upward);
-  }
-
-  // spanwiseI: a vector normal to lift-drag-plane described in inertial frame
-  ignition::math::Vector3d spanwiseI = forwardI.Cross(upwardI).Normalize();
-
   // get linear velocity at cp in inertial frame
   ignition::math::Vector3d vel;
+  ignition::math::Vector3d velI;
   double motor_rot_vel_=0;
   double linearVe=0;
   if (this->velocityJoint){
@@ -234,8 +218,25 @@ void LiftDragPlugin::OnUpdate()
   // this->velSmooth = e*vel + (1.0 - e)*velSmooth;
   // vel = this->velSmooth;
 
-  if (vel.Length() <= 0.01)
-    return;
+  // if (vel.Length() <= 0.01)
+  //   return;
+
+  ignition::math::Vector3d upwardI;
+  if (this->radialSymmetry)
+  {
+    // use inflow velocity to determine upward direction
+    // which is the component of inflow perpendicular to forward direction.
+    ignition::math::Vector3d tmp = forwardI.Cross(velI);
+    upwardI = forwardI.Cross(tmp).Normalize();
+  }
+  else
+  {
+    upwardI = pose.Rot().RotateVector(this->upward);
+  }
+
+  // spanwiseI: a vector normal to lift-drag-plane described in inertial frame
+  ignition::math::Vector3d spanwiseI = forwardI.Cross(upwardI).Normalize();
+
 
   const double minRatio = -1.0;
   const double maxRatio = 1.0;

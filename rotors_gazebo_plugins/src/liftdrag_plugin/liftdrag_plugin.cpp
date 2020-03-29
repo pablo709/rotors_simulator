@@ -17,7 +17,7 @@
 
 #include <algorithm>
 #include <string>
-
+#include <ros/ros.h>
 #include "gazebo/common/Assert.hh"
 #include "gazebo/physics/physics.hh"
 #include "gazebo/sensors/SensorManager.hh"
@@ -183,6 +183,7 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
 /////////////////////////////////////////////////
 void LiftDragPlugin::OnUpdate()
 {
+  // ROS_INFO("OnUpdate ");
   GZ_ASSERT(this->link, "Link was NULL");
    // NICOA: esto lo movi para arriba
    // pose of body
@@ -242,6 +243,8 @@ void LiftDragPlugin::OnUpdate()
   // check sweep (angle between velI and lift-drag-plane)
   double sinSweepAngle = ignition::math::clamp(
       spanwiseI.Dot(velI), minRatio, maxRatio);
+
+  
   // get cos from trig identity
   double cosSweepAngle = 1.0 - sinSweepAngle * sinSweepAngle;
   this->sweep = asin(sinSweepAngle);

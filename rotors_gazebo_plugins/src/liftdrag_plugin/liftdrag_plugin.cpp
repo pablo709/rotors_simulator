@@ -184,6 +184,13 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
 void LiftDragPlugin::OnUpdate()
 {
   GZ_ASSERT(this->link, "Link was NULL");
+   // NICOA: esto lo movi para arriba
+   // pose of body
+  ignition::math::Pose3d pose = this->link->WorldPose();
+
+  // rotate forward and upward vectors into inertial frame
+  ignition::math::Vector3d forwardI = pose.Rot().RotateVector(this->forward);
+
   // get linear velocity at cp in inertial frame
   ignition::math::Vector3d vel;
   double motor_rot_vel_=0;
@@ -196,13 +203,14 @@ void LiftDragPlugin::OnUpdate()
 
     linearVe= real_motor_velocity * (sqrt(2 * this->motor_constant/(this->rho * this->area)));
     
-    vel = ignition::math::Vector3d (0, 0, linearVe);
+    vel = forwardI.Normalize() * fabs(linearVe);
+    //vel = ignition::math::Vector3d (0, 0, abs(linearVe));
     
   }else{
     vel = this->link->WorldLinearVel(this->cp);
   }
   ignition::math::Vector3d velI = vel;
-  velI.Normalize();
+  velI = velI.Normalize();
 
   // smoothing
   // double e = 0.8;
@@ -211,12 +219,6 @@ void LiftDragPlugin::OnUpdate()
 
   if (vel.Length() <= 0.01)
     return;
-
-  // pose of body
-  ignition::math::Pose3d pose = this->link->WorldPose();
-
-  // rotate forward and upward vectors into inertial frame
-  ignition::math::Vector3d forwardI = pose.Rot().RotateVector(this->forward);
 
   ignition::math::Vector3d upwardI;
   if (this->radialSymmetry)
@@ -234,12 +236,12 @@ void LiftDragPlugin::OnUpdate()
   // spanwiseI: a vector normal to lift-drag-plane described in inertial frame
   ignition::math::Vector3d spanwiseI = forwardI.Cross(upwardI).Normalize();
 
+
   const double minRatio = -1.0;
   const double maxRatio = 1.0;
   // check sweep (angle between velI and lift-drag-plane)
   double sinSweepAngle = ignition::math::clamp(
       spanwiseI.Dot(velI), minRatio, maxRatio);
-
   // get cos from trig identity
   double cosSweepAngle = 1.0 - sinSweepAngle * sinSweepAngle;
   this->sweep = asin(sinSweepAngle);
@@ -276,8 +278,7 @@ void LiftDragPlugin::OnUpdate()
   //   cos(theta) = a.Dot(b)/(a.Length()*b.Lenghth())
   // given upwardI and liftI are both unit vectors, we can drop the denominator
   //   cos(theta) = a.Dot(b)
-  double cosAlpha = ignition::math::clamp(liftI.Dot(upwardI), minRatio, maxRatio);
-
+  double cosAlpha = ignition::math::clamp(liftI.Dot(upwardI), minRatio, maxRatio); //NICOA: esto me tiene que dar  0
   // Is alpha positive or negative? Test:
   // forwardI points toward zero alpha
   // if forwardI is in the same direction as lift, alpha is positive.
@@ -287,6 +288,7 @@ void LiftDragPlugin::OnUpdate()
   else
     this->alpha = this->alpha0 - acos(cosAlpha);
 
+  this->alpha = this->alpha0; // FIXME: Hack
   // normalize to within +/-90 deg
   while (fabs(this->alpha) > 0.5 * M_PI)
     this->alpha = this->alpha > 0 ? this->alpha - M_PI
@@ -298,6 +300,7 @@ void LiftDragPlugin::OnUpdate()
 
   // compute cl at cp, check for stall, correct for sweep
   double cl;
+
   if (this->alpha > this->alphaStall)
   {
     cl = (this->cla * this->alphaStall +
@@ -314,9 +317,9 @@ void LiftDragPlugin::OnUpdate()
     // make sure cl is still less than 0
     cl = std::min(0.0, cl);
   }
-  else
+  else{
     cl = this->cla * this->alpha * cosSweepAngle;
-
+  }
   // modify cl per control joint value
   if (this->controlJoint)
   {

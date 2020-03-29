@@ -7,3 +7,4 @@
 *~
 */models/iris/*.sdf
 *.user
+rotors_description/urdf/kamikaze_liftDrag_path.xacro

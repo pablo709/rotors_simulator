@@ -2,7 +2,9 @@
 <robot name="kamikaze" xmlns:xacro="http://ros.org/wiki/xacro">
   
   <link name="world"/>
-  <!-- Included URDF Motors Files -->
+  <!-- Included URDF kamikaze properties -->
+  <xacro:include filename="$(find rotors_description)/urdf/kamikaze_liftDrag_path.xacro" />
+  <!-- Included URDF kamikaze properties -->
   <xacro:include filename="$(find rotors_description)/urdf/kamikaze_properties.xacro" />
   <!-- Included URDF Motors Files -->
   <xacro:include filename="$(find rotors_description)/urdf/multirotor_base.xacro" />
@@ -70,7 +72,7 @@
 
   <joint name="${namespace}/elevon_2_revolutejoint" type="continuous">
     <axis xyz="1 0 0" />
-    <property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
+    <xacro:property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
     <origin xyz="0.11 0 -0.088" rpy="0 0.17 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevon_unit_2" />
@@ -126,7 +128,7 @@
   <!-- elevon 2 -->
   <joint name="${namespace}/elevon_3_revolutejoint" type="continuous">
     <axis xyz="1 0 0" />
-    <property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
+    <xacro:property name="mesh_file" value="package://rotors_description/meshes/kamikaze.dae" />
     <origin xyz="-0.11 0 -0.088" rpy="0 2.96 0" />
     <parent link="${namespace}/base_link" />
     <child link="${namespace}/elevon_unit_3"/>
@@ -181,7 +183,7 @@
 
   <!-- liftDrag 1 -->
   <gazebo>
-    <plugin name="wing_0" filename="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
+    <plugin name="wing_0" filename="${liftDragPath}/libLiftDragPlugin.so">
       <a0>${a0}</a0>
       <cla>${cla}</cla>
       <cda>${cda}</cda>
@@ -207,7 +209,7 @@
 
   <!-- liftDrag 2 -->
   <gazebo>
-    <plugin name="wing_1" filename="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so">
+    <plugin name="wing_1" filename="${liftDragPath}/libLiftDragPlugin.so">
       <a0>${a0}</a0>
       <cla>${cla}</cla>
       <cda>${cda}</cda>

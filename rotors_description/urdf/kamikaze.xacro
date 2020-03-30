@@ -105,7 +105,7 @@
       <linkName>${namespace}/elevon_unit_2</linkName>
       <turningDirection>ccw</turningDirection>
       <motorType>position</motorType>
-      <commandSubTopic>command/elevon_2_angle</commandSubTopic>
+      <commandSubTopic>command/elevon_angle</commandSubTopic>
       <motorNumber>0</motorNumber>
       <motorSpeedPubTopic>elevon/2/velocity</motorSpeedPubTopic>
       <motorPositionPubTopic>elevon/2/position</motorPositionPubTopic>
@@ -164,7 +164,7 @@
       <linkName>${namespace}/elevon_unit_3</linkName>
       <turningDirection>ccw</turningDirection>
       <motorType>position</motorType>
-      <commandSubTopic>command/elevon_3_angle</commandSubTopic>
+      <commandSubTopic>command/elevon_angle</commandSubTopic>
       <motorNumber>1</motorNumber>
       <motorSpeedPubTopic>elevon/3/velocity</motorSpeedPubTopic>
       <motorPositionPubTopic>elevon/3/position</motorPositionPubTopic>

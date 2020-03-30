@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <robot name="kamikaze" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:property name="liftDragPath" value="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib/libLiftDragPlugin.so" />
+  <xacro:property name="liftDragPath" value="/home/pablo/Documentos/UTN/proyecto/ros_sim/ros_ws/devel/lib" />
   <!-- <xacro:property name="liftDragPath" value="/home/sheila/ros_sim/ros_ws/devel/lib" /> -->
 </robot>

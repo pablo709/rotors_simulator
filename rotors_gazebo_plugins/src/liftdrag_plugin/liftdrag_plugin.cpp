@@ -17,7 +17,6 @@
 
 #include <algorithm>
 #include <string>
-#include <ros/ros.h>
 #include "gazebo/common/Assert.hh"
 #include "gazebo/physics/physics.hh"
 #include "gazebo/sensors/SensorManager.hh"
@@ -64,6 +63,10 @@ LiftDragPlugin::~LiftDragPlugin()
 void LiftDragPlugin::Load(physics::ModelPtr _model,
                      sdf::ElementPtr _sdf)
 {
+  gzdbg << "\n\n";
+  gzdbg << "=======================================\n";
+  gzdbg << "liftDrag plugin Hacked!\n";
+  gzdbg << "=============================\n\n";
   GZ_ASSERT(_model, "LiftDragPlugin _model pointer is NULL");
   GZ_ASSERT(_sdf, "LiftDragPlugin _sdf pointer is NULL");
   this->model = _model;
@@ -183,7 +186,6 @@ void LiftDragPlugin::Load(physics::ModelPtr _model,
 /////////////////////////////////////////////////
 void LiftDragPlugin::OnUpdate()
 {
-  // ROS_INFO("OnUpdate ");
   GZ_ASSERT(this->link, "Link was NULL");
    // NICOA: esto lo movi para arriba
    // pose of body

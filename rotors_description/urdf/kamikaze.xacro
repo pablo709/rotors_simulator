@@ -197,8 +197,7 @@
       <air_density>${air_density}</air_density>
       <forward>0 0 -1</forward>
       <upward>0 1 0</upward>
-     <!-- <link_name>${namespace}/base_link</link_name> -->
-      <link_name>esfera</link_name>
+      <link_name>${namespace}/base_link</link_name>
       <control_joint_name>${namespace}/elevon_3_revolutejoint</control_joint_name>
       <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_0_joint</velocity_joint_name>
@@ -223,8 +222,7 @@
       <air_density>${air_density}</air_density>
       <forward>0 0 1</forward>
       <upward>0 1 0</upward>
-      <!-- <link_name>${namespace}/base_link</link_name> -->
-      <link_name>esfera</link_name>
+      <link_name>${namespace}/base_link</link_name>
       <control_joint_name>${namespace}/elevon_2_revolutejoint</control_joint_name>
       <control_joint_rad_to_cl>${control_joint_rad_to_cl}</control_joint_rad_to_cl>
       <velocity_joint_name>${namespace}/rotor_1_joint</velocity_joint_name>
@@ -233,87 +231,40 @@
     </plugin>
   </gazebo>
 
-<link name="esfera">
-    <inertial>
-      <mass value="0.0000001" /> 
-      <xacro:insert_block name="elevon_inertia" />
-    </inertial>
-    <visual>
-      <geometry>
-        <sphere radius="0.005" />  
-      </geometry>
-    </visual>
-  </link> 
-
-   <gazebo reference="esfera">
-    <material>Gazebo/Green</material>
-  </gazebo>
-
-
 <!-- Control de altura -->
 <!-- <joint name="world_fixed" type="prismatic">
   <parent link="world"/>
-  <child link="esfera"/>
+  <child link="${namespace}/base_link"/>
   <axis xyz="0 0 1" />
   <origin xyz="0 0 0" rpy="0 0 0" />
   <limit lower="0" upper="50" effort="20000" velocity="20000"/>
-</joint>
-<joint name="CoG" type="fixed">
-  <child link="${namespace}/base_link"/>
-  <parent link="esfera"/>
-  <origin xyz="0 0 .05" rpy="0 0 0" />
-  <axis xyz="0 0 1" />
 </joint> -->
+
 
 
 <!--  Control de Yaw-->
 <joint name="world_fixed" type="continuous">
   <parent link="world"/>
-  <child link="esfera"/>
+  <child link="${namespace}/base_link"/>
   <axis xyz="0 0 1" />
   <origin xyz="0 0 1" rpy="0 0 0" />
-</joint> 
-
-<joint name="CoG" type="fixed">
-  <child link="${namespace}/base_link"/>
-  <parent link="esfera"/>
-  <origin xyz="0 0 .05" rpy="0 0 0" />
-  <axis xyz="0 0 1" />
-</joint>
-
-
+</joint>  
 
 <!-- Control de pitch -->
 <!-- <joint name="world_fixed" type="continuous">
   <parent link="world"/>
-  <child link="esfera"/>
+  <child link="${namespace}/base_link"/>
   <axis xyz="1 0 0" />
   <origin xyz="0 0 1" rpy="0 0 0" />
-</joint>
-
-<joint name="CoG" type="fixed">
-  <child link="${namespace}/base_link"/>
-  <parent link="esfera"/>
-  <origin xyz="0 0 .05" rpy="0 0 0" />
-  <axis xyz="1 0 0" />
 </joint> -->
 
-
-
 <!-- Contro de Roll -->
-  <!-- <joint name="world_fixed" type="continuous">
-    <parent link="world"/>
-    <child link="esfera"/>
-    <axis xyz="0 1 0" />
-    <origin xyz="0 0 1" rpy="0 0 0" />
-  </joint>
-
-  <joint name="CoG" type="fixed">
-    <child link="${namespace}/base_link"/>
-    <parent link="esfera"/>
-    <origin xyz="0 0 .05" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
-  </joint> -->
+<!-- <joint name="world_fixed" type="continuous">
+  <parent link="world"/>
+  <child link="${namespace}/base_link"/>
+  <axis xyz="0 1 0" />
+  <origin xyz="0 0 1" rpy="0 0 0" />
+</joint> -->
 
 
 </robot>

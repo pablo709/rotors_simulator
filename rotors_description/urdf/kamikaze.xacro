@@ -195,7 +195,7 @@
       <cp>-0.228 0 0.0318</cp><!-- FIXME!!!! -->
       <area>${area}</area>
       <air_density>${air_density}</air_density>
-      <forward>0 0 -1</forward>
+      <forward>0 0 1</forward>
       <upward>0 1 0</upward>
       <link_name>${namespace}/base_link</link_name>
       <control_joint_name>${namespace}/elevon_3_revolutejoint</control_joint_name>

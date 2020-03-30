@@ -110,8 +110,8 @@
       <motorSpeedPubTopic>elevon/2/velocity</motorSpeedPubTopic>
       <motorPositionPubTopic>elevon/2/position</motorPositionPubTopic>
       <joint_control_pid>
-        <p>0.5</p>
-        <i>0.5</i>
+        <p>0.8</p>
+        <i>0.0</i>
         <d>0.1</d>
         <iMax>1.0</iMax>
         <iMin>-1.0</iMin>
@@ -169,8 +169,8 @@
       <motorSpeedPubTopic>elevon/3/velocity</motorSpeedPubTopic>
       <motorPositionPubTopic>elevon/3/position</motorPositionPubTopic>
       <joint_control_pid>
-        <p>0.5</p>
-        <i>0.5</i>
+        <p>0.8</p>
+        <i>0.0</i>
         <d>0.1</d>
         <iMax>1.0</iMax>
         <iMin>-1.0</iMin>

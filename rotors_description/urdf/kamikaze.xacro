@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="kamikaze" xmlns:xacro="http://ros.org/wiki/xacro">
   
-  <link name="world"/>
+  <!-- <link name="world"/> -->
   <!-- Included URDF kamikaze properties -->
   <xacro:include filename="$(find rotors_description)/urdf/kamikaze_liftDrag_path.xacro" />
   <!-- Included URDF kamikaze properties -->
@@ -243,12 +243,12 @@
 
 
 <!--  Control de Yaw-->
-<joint name="world_fixed" type="continuous">
+<!-- <joint name="world_fixed" type="continuous">
   <parent link="world"/>
   <child link="${namespace}/base_link"/>
   <axis xyz="0 0 1" />
   <origin xyz="0 0 1" rpy="0 0 0" />
-</joint>  
+</joint>   -->
 
 <!-- Control de pitch -->
 <!-- <joint name="world_fixed" type="continuous">
